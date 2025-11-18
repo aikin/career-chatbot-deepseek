@@ -252,3 +252,9 @@ Built as part of the AI Agents course, demonstrating:
 - Test-driven development
 - Modular architecture
 
+## References
+
+This project is inspired by and builds upon the original career chatbot implementation:
+
+- **[Original Career Chatbot](https://github.com/ed-donner/agents/blob/main/1_foundations/4_lab4.ipynb)** - The foundational "Professionally You!" chatbot with Pushover notifications, tool calling, and Gradio deployment by Ed Donner
+
