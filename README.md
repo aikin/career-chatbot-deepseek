@@ -202,10 +202,10 @@ Both files are committed to version control for reproducibility.
 This project follows a sprint-based implementation plan. See `docs/plan/` folder for detailed sprint guides:
 
 1. **Sprint 1** - Foundation & Data Models ✅
-2. **Sprint 2** - Services Layer
-3. **Sprint 3** - RAG & Tools
-4. **Sprint 4** - Agents & Memory
-5. **Sprint 5** - Integration & Deployment
+2. **Sprint 2** - Services Layer ✅
+3. **Sprint 3** - RAG & Tools ✅
+4. **Sprint 4** - Agents & Memory ✅
+5. **Sprint 5** - Integration & Deployment ✅
 
 ## Deployment
 
