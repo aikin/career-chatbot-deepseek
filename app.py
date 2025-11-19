@@ -92,7 +92,9 @@ def chat(message: str, history: list) -> str:
         response = controller.process_message(message)
         return str(response)
     except Exception as e:
-        return f"I apologize, but I encountered an error: {str(e)}"
+        # Log the full error here in a real app
+        print(f"Error processing message: {e}")
+        return f"I apologize, but I encountered an unexpected error. Please try again later. (Error: {str(e)})"
 
 
 demo = gr.ChatInterface(
@@ -119,9 +121,17 @@ demo = gr.ChatInterface(
 
 
 if __name__ == "__main__":
-    os.makedirs("data", exist_ok=True)
-    demo.launch(
-        server_name="0.0.0.0",
-        server_port=7860,
-        share=False
-    )
+    try:
+        print("Initializing Career Chatbot...")
+        controller, rag_service = initialize_system()
+        print("✓ System initialized successfully!")
+        
+        os.makedirs("data", exist_ok=True)
+        demo.launch(
+            server_name="0.0.0.0",
+            server_port=7860,
+            share=False
+        )
+    except Exception as e:
+        print(f"Failed to start application: {e}")
+        exit(1)

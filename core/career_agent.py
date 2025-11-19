@@ -44,7 +44,7 @@ class CareerAgent:
         ]
 
         # Agentic loop: allow multiple tool calls
-        max_iterations = 5
+        max_iterations = settings.max_agent_iterations
         for _ in range(max_iterations):
             response = self.llm_service.chat_completion(
                 messages=messages,

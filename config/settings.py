@@ -29,6 +29,7 @@ class Settings(BaseSettings):
     agent_name: str = "Your Name"
     primary_model: str = "deepseek-chat"
     evaluator_model: str = "gemini-2.0-flash"
+    max_agent_iterations: int = 5
 
     # Feature Flags
     enable_rag: bool = True

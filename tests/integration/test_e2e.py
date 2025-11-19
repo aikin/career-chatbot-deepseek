@@ -89,11 +89,20 @@ def test_e2e_multiple_turns(system):
     controller, _ = system
 
     # Mock different responses for each turn
-    responses = [
+    # Use return_value instead of side_effect to allow unlimited calls
+    mock_responses = [
         controller._create_mock_response("My name is Test Agent."),
         controller._create_mock_response("I have 5 years of experience in AI and software development."),
     ]
-    controller._mock_client.chat.completions.create.side_effect = responses
+    
+    call_count = [0]
+    
+    def side_effect(*args, **kwargs):
+        response = mock_responses[min(call_count[0], len(mock_responses) - 1)]
+        call_count[0] += 1
+        return response
+
+    controller._mock_client.chat.completions.create.side_effect = side_effect
 
     response1 = controller.process_message("What is your name?")
     response2 = controller.process_message("What is your experience?")
