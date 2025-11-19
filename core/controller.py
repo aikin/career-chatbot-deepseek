@@ -45,15 +45,16 @@ class ChatbotController:
 
         evaluation_score = None
 
-        if self.enable_evaluation:
-            evaluation = self.evaluator_agent.evaluate(message, response)
+        if self.enable_evaluation and self.evaluator_agent:
+            evaluator = self.evaluator_agent
+            evaluation = evaluator.evaluate(message, response)
             evaluation_score = evaluation.score
 
             if not evaluation.acceptable:
                 response = self.career_agent.chat(
                     f"{message}\n\nPrevious response feedback: {evaluation.feedback}", history
                 )
-                evaluation = self.evaluator_agent.evaluate(message, response)
+                evaluation = evaluator.evaluate(message, response)
                 evaluation_score = evaluation.score
 
         self.database_service.save_conversation(

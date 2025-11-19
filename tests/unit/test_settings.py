@@ -11,12 +11,35 @@ def use_test_env(monkeypatch):
     test_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
     monkeypatch.chdir(test_dir)
 
+    # Clear environment variables that might interfere
+    env_vars_to_clear = [
+        "DEEPSEEK_API_KEY",
+        "AGENT_NAME",
+        "PRIMARY_MODEL",
+        "CHUNK_SIZE",
+        "TOP_K_RESULTS",
+        "ENABLE_RAG",
+        "ENABLE_EVALUATION",
+        "GOOGLE_API_KEY",
+        "PUSHOVER_USER",
+        "PUSHOVER_TOKEN",
+    ]
+    original_env = {}
+    for var in env_vars_to_clear:
+        if var in os.environ:
+            original_env[var] = os.environ[var]
+            del os.environ[var]
+
     original_config = Settings.model_config
     Settings.model_config = SettingsConfigDict(
         env_file=".env.test", env_file_encoding="utf-8", case_sensitive=False, extra="ignore"
     )
     yield
     Settings.model_config = original_config
+
+    # Restore environment variables
+    for var, value in original_env.items():
+        os.environ[var] = value
 
 
 def test_settings_with_required_fields():

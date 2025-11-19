@@ -33,7 +33,7 @@ def test_save_contact(db_service):
 def test_record_unknown_question_new(db_service):
     """Test recording new unknown question."""
     db_service.record_unknown_question("What is AI?")
-    
+
     analytics = db_service.get_analytics()
     assert len(analytics["top_unknown_questions"]) == 1
     assert analytics["top_unknown_questions"][0]["count"] == 1
@@ -44,7 +44,7 @@ def test_record_unknown_question_increment(db_service):
     question = "What is AI?"
     db_service.record_unknown_question(question)
     db_service.record_unknown_question(question)
-    
+
     analytics = db_service.get_analytics()
     assert analytics["top_unknown_questions"][0]["count"] == 2
 
@@ -54,7 +54,7 @@ def test_get_analytics(db_service):
     db_service.save_conversation("Q1", "A1", 8.0)
     db_service.save_conversation("Q2", "A2", 9.0)
     db_service.save_contact("test@example.com")
-    
+
     analytics = db_service.get_analytics()
     assert analytics["total_conversations"] == 2
     assert analytics["total_contacts"] == 1
@@ -65,7 +65,7 @@ def test_get_recent_conversations(db_service):
     """Test getting recent conversations."""
     db_service.save_conversation("Q1", "A1")
     db_service.save_conversation("Q2", "A2")
-    
+
     recent = db_service.get_recent_conversations(limit=5)
     assert len(recent) == 2
     assert recent[0]["user_message"] == "Q2"  # Most recent first

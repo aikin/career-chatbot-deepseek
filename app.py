@@ -90,7 +90,7 @@ def chat(message: str, history: list) -> str:
     """
     try:
         response = controller.process_message(message)
-        return response
+        return str(response)
     except Exception as e:
         return f"I apologize, but I encountered an error: {str(e)}"
 

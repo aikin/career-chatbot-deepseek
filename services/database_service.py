@@ -6,7 +6,7 @@ following the Repository pattern.
 
 import json
 from contextlib import contextmanager
-from typing import Any
+from typing import Any, cast
 
 from sqlalchemy import create_engine, desc, func
 from sqlalchemy.orm import Session, sessionmaker
@@ -22,8 +22,10 @@ class DatabaseService:
     Base.metadata.create_all(self.engine)
     self.SessionLocal = sessionmaker(bind=self.engine)
 
+  from collections.abc import Iterator
+
   @contextmanager
-  def get_session(self) -> Session:
+  def get_session(self) -> Iterator[Session]:
     session = self.SessionLocal()
     try:
       yield session
@@ -51,7 +53,7 @@ class DatabaseService:
     with self.get_session() as session:
       session.add(conversation)
       session.flush()
-      return conversation.id
+      return cast(int, conversation.id)
 
 
   def save_contact(
@@ -69,14 +71,14 @@ class DatabaseService:
     with self.get_session() as session:
       session.add(contact)
       session.flush()
-      return contact.id
+      return cast(int, contact.id)
 
   def record_unknown_question(self, question: str) -> None:
     with self.get_session() as session:
       existing = session.query(UnknownQuestion).filter_by(question=question).first()
       if existing:
-        existing.count += 1
-        existing.last_asked = func.now()
+        existing.count += 1  # type: ignore
+        existing.last_asked = func.now()  # type: ignore
       else:
         new_q = UnknownQuestion(question=question)
         session.add(new_q)

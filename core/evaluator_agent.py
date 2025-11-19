@@ -32,7 +32,7 @@ class EvaluatorAgent:
         Question: {question}
         Answer: {answer}
 
-        Evaluate based on: 
+        Evaluate based on:
         1. Relevance: Does the answer address the question?
         2. Accuracy: Is the information correct?
         3. Completeness: Is the answer thorought?

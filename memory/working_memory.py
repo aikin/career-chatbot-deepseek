@@ -1,4 +1,6 @@
 
+from typing import Any
+
 from config.settings import settings
 
 
@@ -11,7 +13,7 @@ class WorkingMemory:
         >>> context = memory.get_context()
     """
 
-    def __init__(self, max_turns: int = None):
+    def __init__(self, max_turns: int | None = None):
         self.max_runs = max_turns or settings.working_memory_max_turns
         self.turns: list[dict] = []
 
@@ -28,7 +30,7 @@ class WorkingMemory:
         if len(self.turns) > self.max_runs * 2:
             self.turns = self.turns[-(self.max_runs * 2) :]
 
-    def get_context(self) -> list[dict]:
+    def get_context(self) -> list[dict[str, Any]]:
         """Get conversation context for LLM.
 
         Returns:

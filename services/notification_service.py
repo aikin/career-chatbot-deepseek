@@ -1,6 +1,5 @@
 """Notification service for Pushover integration."""
 
-from typing import Optional
 
 import requests
 
@@ -14,7 +13,7 @@ class NotificationService:
         self.token = settings.pushover_token
         self.enabled = bool(self.user and self.token)
 
-    def send(self, message: str, title: Optional[str] = None) -> bool:
+    def send(self, message: str, title: str | None = None) -> bool:
         if not self.enabled:
             return False
 

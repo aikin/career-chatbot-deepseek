@@ -2,14 +2,15 @@
 A professional AI assistant that represents you on your website.
 """
 
-from dotenv import load_dotenv
-from openai import OpenAI
-from textwrap import dedent
 import json
 import os
-import requests
-from pypdf import PdfReader
+from textwrap import dedent
+
 import gradio as gr
+import requests
+from dotenv import load_dotenv
+from openai import OpenAI
+from pypdf import PdfReader
 
 
 class CareerAgent:
@@ -49,7 +50,7 @@ class CareerAgent:
     def _load_summary(self) -> str:
         """Load personal summary."""
         try:
-            with open("assets/summary.txt", "r", encoding="utf-8") as f:
+            with open("assets/summary.txt", encoding="utf-8") as f:
                 return f.read()
         except Exception as e:
             print(f"Error loading summary: {e}")
